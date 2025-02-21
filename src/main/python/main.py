@@ -29,7 +29,7 @@ def parity(string_1: str, string_2: str):
     return False
 
 # Searches for a substring inside of a string.
-def search(string: str, substring: str) -> int:
+def search(string: str, substring: str) -> bool:
     characters = preprocess(substring)
     skip = 0
     strlen = len(string)
@@ -37,7 +37,7 @@ def search(string: str, substring: str) -> int:
     
     while strlen - skip >= sublen:
         if parity(string[skip:skip + sublen], substring):
-            return skip
+            return True
         
         # If a bad character is found, skip past that
         # using the offset from the character indexes
@@ -47,7 +47,7 @@ def search(string: str, substring: str) -> int:
 
         skip += characters[bad_char_value]
     
-    return -1
+    return False
 
 # Prompts the user with available options.
 def select_options() -> int:
@@ -133,11 +133,9 @@ if __name__ == "__main__":
             case 2:
                 substring = input("Select a substring to search for: ")
 
-                for state in states:
-                    index = search(state, substring)
-
-                    if index != -1:
-                        print(f"{state} ({index})")
+                for index, state in enumerate(states):
+                    if search(state, substring):
+                        print(f"{state} (STATE INDEX: {index})")
 
             # Exit the program.
             case 3:
