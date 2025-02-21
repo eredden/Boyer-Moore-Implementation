@@ -43,7 +43,7 @@ public class Main {
     }
 
     // Searches for a substring inside of a string using the Boyer-Moore algorithm.
-    public static boolean searchString(String string, String substring) {
+    public static int searchString(String string, String substring) {
         int[] characterIndexes = getCharacterIndexes(substring);
         int skip = 0;
         int strlen = string.length();
@@ -51,7 +51,7 @@ public class Main {
 
         while (strlen - skip >= sublen) {
             if (checkParity(string.substring(skip, skip + sublen), substring)) {
-                return true;
+                return skip;
             }
 
             // If a bad character is found, skip past that using the offset from the 
@@ -61,7 +61,7 @@ public class Main {
             skip += characterIndexes[bad_char];
         }
 
-        return false;
+        return -1;
     }
 
     // Continously prompt the user to select an option until the user provides a valid integer.
@@ -167,8 +167,10 @@ public class Main {
                     String substring = listener.nextLine();
 
                     for (int i = 0; i < states.length; i++) {
-                        if (searchString(states[i], substring)) {
-                            System.out.println(states[i]);
+                        int index = searchString(states[i], substring);
+
+                        if (index != -1) {
+                            System.out.println(states[i] + " (INDEX: " + index + ")");
                         }
                     }
 
