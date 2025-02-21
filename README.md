@@ -1,4 +1,4 @@
-#  Searching Text & String Data
+# Boyer-Moore Implementation: Searching Text & String Data
 
 ### Description
 
